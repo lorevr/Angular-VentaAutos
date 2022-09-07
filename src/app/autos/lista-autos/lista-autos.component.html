@@ -1,0 +1,57 @@
+<div class="card">
+    <div class="card-header text-bg-info">
+        <h1>{{ tituloListaAutos }}</h1>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div>
+                <label for="" class="col-md-12">Filtrar por:</label>
+                <input type="text" [(ngModel)]="filtro" class="col-md-4 rounded-1">
+                <h3 class="col-md-6">Filtrar por:</h3>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr class="text-primary">
+                <th>
+                    <button class="btn btn-primary" (click)="toggleImage()">
+                        {{ muestraImagen ? "Oculta" : "Muestra" }} imagen
+                    </button>
+                </th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Color</th>
+                <th>Kilómetros</th>
+                <th>Precio</th>
+                <th>Calificación</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="fw-bold align-middle" *ngFor = "let auto of listaAutosFiltrados">
+                <td>
+                    <p><img [src]="auto.imagenUrl" 
+                        [style.width.px] = "imageWidth"
+                        [style.margin.px] = "imageMargin"
+                        *ngIf="muestraImagen"></p>
+                </td>
+                <td>{{ auto.marca }}</td>
+                <td><a [routerLink]="['/auto', auto.id]">
+                    {{ auto.modelo | lowercase | aEspacio:"-" }}</a></td>
+                <td>{{ auto.anio }}</td>
+                <td>{{ auto.color }}</td>
+                <td>{{ auto.kilometros | number }}</td>
+                <td>{{ auto.precio | currency }}</td>
+                <td>
+                  <!-- {{ auto.calificacion }} -->
+                  <estrellas 
+                    [calificacion]="auto.calificacion"
+                    (starsClick) = "onClickCalificacion($event)">
+                  </estrellas>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
